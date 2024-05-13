@@ -1,14 +1,14 @@
-function productExceptSelf(nums) {
-  const result = [];
-  let product = 1;
-  for (let i = 0; i < nums.length; i++) {
-    result[i] = product;
-    product *= nums[i];
+function connect(root) {
+  if (!root) return root;
+  let levelStart = root;
+  while (levelStart) {
+    let curr = levelStart;
+    while (curr) {
+      if (curr.left) curr.left.next = curr.right;
+      if (curr.right && curr.next) curr.right.next = curr.next.left;
+      curr = curr.next;
+    }
+    levelStart = levelStart.left;
   }
-  product = 1;
-  for (let i = nums.length - 1; i >= 0; i--) {
-    result[i] *= product;
-    product *= nums[i];
-  }
-  return result;
+  return root;
 }
