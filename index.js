@@ -1,14 +1,22 @@
-function connect(root) {
-  if (!root) return root;
-  let levelStart = root;
-  while (levelStart) {
-    let curr = levelStart;
-    while (curr) {
-      if (curr.left) curr.left.next = curr.right;
-      if (curr.right && curr.next) curr.right.next = curr.next.left;
-      curr = curr.next;
+function removeKdigits(num, k) {
+  const stack = [];
+  for (const digit of num) {
+    while (k > 0 && stack.length && stack[stack.length - 1] > digit) {
+      stack.pop();
+      k--;
     }
-    levelStart = levelStart.left;
+    stack.push(digit);
   }
-  return root;
+  while (k > 0) {
+    stack.pop();
+    k--;
+  }
+  let result = "";
+  let leadingZero = true;
+  for (const digit of stack) {
+    if (leadingZero && digit === "0") continue;
+    leadingZero = false;
+    result += digit;
+  }
+  return result || "0";
 }
