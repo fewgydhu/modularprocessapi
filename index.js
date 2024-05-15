@@ -1,22 +1,8 @@
-function removeKdigits(num, k) {
-  const stack = [];
-  for (const digit of num) {
-    while (k > 0 && stack.length && stack[stack.length - 1] > digit) {
-      stack.pop();
-      k--;
-    }
-    stack.push(digit);
-  }
-  while (k > 0) {
-    stack.pop();
-    k--;
-  }
-  let result = "";
-  let leadingZero = true;
-  for (const digit of stack) {
-    if (leadingZero && digit === "0") continue;
-    leadingZero = false;
-    result += digit;
-  }
-  return result || "0";
+function sortedArrayToBST(nums) {
+  if (!nums.length) return null;
+  const mid = Math.floor(nums.length / 2);
+  const root = new TreeNode(nums[mid]);
+  root.left = sortedArrayToBST(nums.slice(0, mid));
+  root.right = sortedArrayToBST(nums.slice(mid + 1));
+  return root;
 }
